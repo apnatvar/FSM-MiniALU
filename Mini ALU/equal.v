@@ -1,0 +1,45 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 01.11.2021 19:28:20
+// Design Name: 
+// Module Name: base
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module equal
+   (
+    input  wire[1:0] a, b, // a adn b are the two 2-bit numbers to compare
+    output wire aeqb // single bit output. Should be high if a adn b the same
+   );
+
+   // internal signal declaration, used to wire outpus of the 1 bit comparators
+   wire e0, e1;
+
+   // body
+   // instantiate two 1-bit comparators that we already know are tested and work
+   // named instantiation allows us to change order of ports.
+   basis eq_bit0_unit (.i0(a[0]), .i1(b[0]), .eq(e0));
+   
+    // following changes are made:
+    // i. semicolon added
+    // ii. module name changed
+   basis eq_bit1_unit (.eq(e1), .i0(a[1]), .i1(b[1]));
+
+   // a and b are equal if individual bits are equal, which comes from the 1-bit comparators
+   assign aeqb = e0 & e1; // operator changed from xor to and
+
+endmodule
